@@ -1,70 +1,78 @@
-# Getting Started with Create React App
+<h1 align="center">
+  <img alt="Plant Manager" title="Plant Manager" src="logo.png" />
+</h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h4 align="center">Aplicação mobile desenvolvida para lhe ajudar a lembrar de suas atividades diárias.</h4>
 
-## Available Scripts
+<p align="center">
+  <a href="#como-executar">Como executar</a> •
+  <a href="#funcionalidades">Funcionalidades</a> •
+  <a href="#a-desenvolver">A desenvolver</a>
+</p>
 
-In the project directory, you can run:
+<h1 align="center">
+  <img alt="Plant Manager" title="Plant Manager" src="Capa.PNG" />
+</h1>
 
-### `yarn start`
+## 💻 Projeto
+Aplicativo para lhe ajudar a lembrar de suas atividades diárias.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## 👥 User Stories
+O João e uma pessoa muito atarefado é péssimo em organização pessoal, sempre se esquecia de suas tarefas ou de seus compromissos com os amigos e o trabalho,
+até de fazer compras no mercado se esquecia.
+Então que tal ajudá-lo a lembrar das suas tarefas? 
+Ou seja, o App ajuda o João a lembrar de seus compromissos. ❤️
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## ⚙ Features
+-   [x] Salva as tarefas do usuário;
+-   [x] Atualiza tarefas já registradas;
+-   [x] Alterar o status da tarefa para concluída ou não concluída;
+-   [x] Mostrar as tarefas atrasadas;
+-   [x] Mostrar as tarefas de hoje, semana, mês ou ano;
+-   [x] Sincroniza as tarefas da versão web com a versão mobile;
 
-### `yarn test`
+## ✨ Tecnologias
+-   [x] React
+-   [x] ReactDom
+-   [x] React Qrcode
+-   [x] Axios
+-   [x] Date Fns
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `yarn build`
+## 🛢 BackEnd
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+*Antes de rodar o App ou a versão Web baixe a base de dados.*
+* [BackEnd_ToDo](https://github.com/Caiovg/ToDo_back.git)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 📱 Versão Mobile
 
-### `yarn eject`
+* [Mobile_ToDo](https://github.com/Caiovg/ToDo.git)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## 💻 Executando o projeto
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Requisitos
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- [Node.js](https://nodejs.org/en/)
+- [Expo](https://expo.io/)  
+- [Yarn](https://classic.yarnpkg.com/) or [NPM](https://www.npmjs.com/)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Instalando e executando o projeto
 
-## Learn More
+*Clone o projeto e acesse a pasta*
+-   [x] React
+```bash
+$ https://github.com/Caiovg/ToDo.git 
+$ cd ToDo_web
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+*Siga os passos abaixo*
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+# Instale as dependências
+$ yarn install
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+$ yarn start
+# Muito bem, ToDo foi iniciado!
+```
+<br>
