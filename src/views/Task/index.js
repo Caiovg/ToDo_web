@@ -1,0 +1,177 @@
+import React, { useState, useEffect } from 'react';
+import * as S from './styles';
+import { format } from "date-fns";
+import api from '../../services/api';
+import { Redirect } from "react-router-dom";
+//nossos componentes
+import TypeIcons from '../../utils/typeIcons';
+import Header from '../../components/Header';
+import Footer from '../../components/Footer';
+import isConnected from '../../utils/isConnected';
+
+
+/*import IconCalendar from '../../assets/calendar.png';
+import IconClock from '../../assets/clock.png';*/
+
+function Task({match}) {
+
+    const [redirect, setRedirect] = useState(false);
+    const [type, setType] = useState();
+    const [id, setId] = useState();
+    const [done, setDone] = useState(false);
+    const [title, setTitle] = useState();
+    const [description, setDescription] = useState();
+    const [date, setDate] = useState();
+    const [hour, setHour] = useState();
+
+
+  /**when estou deixando no padrao de hora e data do propio mongo na hora de pegar essa data converte por codigo */
+    async function Save(){
+        //Validação dos dados
+        if (!title)
+            return alert("Você precisa informar o título da tarefa")
+        else if (!description) 
+            return alert("Você precisa informar a descrição da tarefa")
+        else if (!type) 
+            return alert("Você precisa informar a tipo da tarefa")
+        else if (!date) 
+            return alert("Você precisa informar a data da tarefa")
+        else if (!hour) 
+            return alert("Você precisa informar a hora da tarefa")
+
+
+        if (match.params.id) { 
+            await api.put(`/task/${match.params.id}`, {
+                macaddress: isConnected,
+                done,
+                type,
+                title,
+                description,
+                when: `${date}T${hour}:00.000`
+            }).then(() =>
+                setRedirect(true)
+            )
+        }else{
+            await api.post('/task', {
+            macaddress: isConnected,
+            type,
+            title,
+            description,
+            when: `${date}T${hour}:00.000`
+            }).then(() =>
+                setRedirect(true)
+            )
+        }
+    }
+
+    async function LoadTaskDetails(){
+        await api.get(`/task/${match.params.id}`)
+        .then(response => {
+            setType(response.data.type)
+            setDone(response.data.done)
+            setTitle(response.data.title)
+            setDescription(response.data.description)
+            setDate(format(new Date(response.data.when), 'yyyy-MM-dd'))
+            setHour(format(new Date(response.data.when), 'HH:mm'))
+        }) 
+    }
+
+    async function Remove(){
+      const resp = window.confirm('Deseja Realmente remover a tarefa ?')
+      if(resp === true){
+          await api.delete(`/task/${match.params.id}`)
+          .then(() => setRedirect(true));
+        /*alert('ok, vamos remover')*/
+      }else{
+        alert('tudo bem, vamos manter')
+      }
+    }
+  /** */
+  /**ATENÇÂO: Caso não apareça nada do back para p front, muito possivelmente vc esqueceu de configurar o CORS
+   * CORS e o que permite que as aplicações se conversem, então volte la no backend e configure a pasta
+   * primeira coisa na pasta backend abra o terminal e instale o cors
+   * 'npm install cors'
+   * Agr vá ate o index do backend e crie uma variavel lá do cors
+   * 'const cors = require('cors');'
+   * agr utilize ele
+   * 'server.use(cors());'
+  */
+  /** */
+
+  /**E uma função do react para que toda vez que a tela recarregar ele faça alguma coisa */
+  /**nesse caso o react quando recarregar a pagina
+   * vai chamar o loadTasks para que busque as informações na api
+   * e quando o estado do filtro muda o filterActived ele vai recarregar a pagina 
+   * so que com outras informaçoes do banco dependendo do filtro que foi escolhido
+   */
+  useEffect(() =>{
+    if(!isConnected)
+        setRedirect(true);
+        
+    LoadTaskDetails();
+  }, [])
+
+
+  return (
+    <S.Container>
+        {redirect && <Redirect to="/" /> }
+        <Header/>
+
+        <S.Form>
+
+           <S.TypeIcons>
+                { //Mostra todos os icones que seja maior a zero
+                    TypeIcons.map((icon, index) => (
+                        index > 0 && 
+                        <button type="button" onClick={() => setType(index)}>
+                            <img src={icon} alt="Tipo da Tarefa" 
+                            className={type && type !== index && 'inative'}/>
+                        </button>
+                    ))
+                }
+            </S.TypeIcons>
+
+            <S.Input>
+                <span>Título</span>
+                <input type="text" placeholder="Título da tarefa..." 
+                onChange={e => setTitle(e.target.value)} value={title}/>
+            </S.Input>
+
+            <S.TextArea>
+                <span>Descrição</span>
+                <textarea rows={5} type="text" placeholder="Detalhes da tarefa..."
+                onChange={e => setDescription(e.target.value)} value={description}/>
+            </S.TextArea>
+            
+            <S.Input>
+                <span>Data</span>
+                <input type="date" placeholder="Data da tarefa" onChange={e => setDate(e.target.value)} value={date} />
+                {/* <img src={IconCalendar} alt="Calendário"/> */}
+            </S.Input>
+
+            <S.Input>
+                <span>Hora</span>
+                <input type="time" placeholder="Título da tarefa..." onChange={e => setHour(e.target.value)} value={hour} />
+                {/* <img src={IconClock} alt="Relógio"/> */}
+            </S.Input>
+
+            <S.Options>
+                <div>
+                    <input type="checkbox" checked={done} onChange={e => setDone(!done)}/>
+                    <span>CONCLUÍDO</span>
+                </div>
+                { match.params.id && <button type="button" onClick={Remove}>EXCLUIR</button>}
+            </S.Options>
+
+            <S.Save>
+                <button type="button" onClick={Save}>SALVAR</button>
+            </S.Save>
+
+        </S.Form>
+          
+        <Footer/>
+    </S.Container>
+  )
+}
+
+export default Task;
